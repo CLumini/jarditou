@@ -1,0 +1,50 @@
+.logo
+{
+    width: 25%;
+}
+.logo,.title-logo
+{
+    display: inline;
+}
+.title-logo
+{
+    position: absolute;
+    top:10px;
+    right:400px;
+}
+nav ul
+{
+   background-color: black;
+   width: 100%;
+   border:20px solid black;
+   padding-block: black;
+}
+li
+{
+    display: inline;
+}
+.promotion
+{
+    width:100% ;
+}
+.mentions
+{
+    background-color: black;
+    width: 100%;
+    border:20px solid black;
+    padding-block: black;
+    color:white;
+}
+.devis
+{
+    padding-bottom:60px
+}
+aside
+{
+    width: 300px;
+    height: 485px;
+    background-color:grey;
+    position:absolute ;
+    right: 10px;
+    top:425px
+}

@@ -69,7 +69,7 @@ for(n= N ; n >0; n--)
     console.log("les entiers inférieurs à "+n+" sont: "+result);
   }
 
-  /*No4*/
+  /*No3*/
 
   var N =4
   var X =5
@@ -84,7 +84,7 @@ for(n= N ; n >0; n--)
   
     }
 
-    /*5*/
+    /*No4*/
     
 var resultat;
 var X = window.prompt(" Entrez un Entier");

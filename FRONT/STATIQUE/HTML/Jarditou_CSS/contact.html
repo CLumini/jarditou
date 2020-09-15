@@ -80,6 +80,7 @@
                 <div class="form-group row">
                     <label for="prénom">Votre prénom* : </label>
                     <input class="form-control" type="text" name="prénom" id="prénom" required title="prénom">
+                    <span></span>
                 </div>
 
                 <div class="form-group">
@@ -95,17 +96,20 @@
                                 <input class="form-check-input" type="radio" name="sexe" id="Masculin" value="Masculin">
                                 <label class="form-check-label" for="Masculin">Masculin</label>
                             </div>
+                            <span></span>
                 </div>
 
                 <div class="form-group row">
                     <label for="Ddn">Date de naissance* : </label>
-                    <input class="form-control" type="date" name="Ddn" id="Ddn" required title="Date de naissance">
+                    <input class="form-control" type="date" name="Ddn" id="naissance" required title="Date de naissance">
+                    <span></span>
                 </div>
 
                 <div class="form-group row">
                     <label for="postal">Code postal* : </label>
-                    <input class="form-control" type="number" name="Code postal" id="postal" required
+                    <input class="form-control" type="number" name="Code postal" id="codePostal" required
                         title="code postal">
+                        <span></span>
                 </div>
 
                 <div class="form-group row">
@@ -120,7 +124,8 @@
 
                 <div class="form-group row">
                     <label for="Email">Email* : </label>
-                    <input class="form-control" type="text" name="Email" id="Email" required title="Email">
+                    <input class="form-control" type="text" name="Email" id="eMail" required title="Email">
+                    <span></span>
                 </div>
 
             </fieldset>
@@ -138,20 +143,23 @@
                         <option value=" Réclamation">Réclamation</option>
                         <option value="Autres">Autres</option>
                     </select>
+                    <span></span>
                 </div>
 
                 <div class="form group row">
                     <label for="Question">Votre question* : </label>
                     <textarea class="form-control" name="Question" id="Question"></textarea>
+                    <span></span>
                 </div>
 
                 <div class="form-group">
                     <input class="form-check-input" type="checkbox" name="formulaire" value="consentement">*J'accepte le
                     traitement informatique de ce formulaire
+                    <span></span>
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" class="btn btn-dark" value="Envoyer">
+                    <input type="submit" class="btn btn-dark" value="Envoyer"id="bouton_envoi">
                     <input type="reset" class="btn btn-dark" value="Annuler">
                 </div>
 
@@ -176,15 +184,7 @@
 
         </footer>
     </div>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-    </script>
+    <script src="/DYNAMIQUE/JAVASCRIPT/contact.js"></script>
 
 </body>
 

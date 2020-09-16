@@ -1,11 +1,12 @@
-// 1
+// 1 Calcul du nombre de jeunes, de moyens et de vieux
+
 let ageMin = [];
 let ageMax = [];
 let ageMoy = [];
 let userAge = 0
 
 while (userAge < 100) {
-    let age = prompt("Veuillez entrer votre âge")
+    let age = prompt("Veuillez entrer un âge (le compteur s'arrête à 100")
     userAge = parseInt(age)
 
     if (userAge < 20) {
@@ -18,11 +19,10 @@ while (userAge < 100) {
         ageMoy.push(userAge)
     }
 }
-console.log("Il y a " + ageMin.length + " personnes de moins de 20 ans")
-console.log("Il y a " + ageMax.length + " personnes de plus de 40 ans")
-console.log("Il y a " + ageMoy.length + " personnes entre 20 et 40 ans")
+console.log("Il y a " + ageMin.length + " personnes de moins de 20 ans, " + ageMax.length + " personnes de plus de 40 ans, "+ ageMoy.length + " personnes entre 20 et 40 ans")
 
-// 2
+// 2 Table de multiplication
+
 let N = 0
 let M = 0
 
@@ -37,12 +37,12 @@ function tableMultiplication(M) {
 tableMultiplication(7)
 
 
-// 3
+// 3 recherche d'un prénom
 
 let tabPrenom = ["Audrey", "Aurélien", "Flavien", "Jérémy", "Laurent", "Melik", "Nouara", "Salem", "Samuel"]
 
 function recherche() {
-    var prenom = prompt("veuillez entrer un prénom")
+    var prenom = prompt("Veuillez entrer un prénom")
     let index = tabPrenom.indexOf(prenom)
     if (index == -1) {
         alert("le Prénom : '" + prenom + "' ne se trouve pas dans le tableau")
@@ -57,7 +57,8 @@ function recherche() {
 
 recherche()
 
-//4
+//4 total d'une commande
+
 let pUnitaire = prompt("saisissez le prix")
 let quantité = prompt("saisissez la quantité")
 var pAPayer // Prix à payer

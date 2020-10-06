@@ -1,62 +1,111 @@
      <?php
-		require "header.php";	 
-        require "connexion_bdd.php"; 
-        $db = connexion_base();
+	 
+		include "header.php";	        
 		
-		if(isset($_GET['pro_id']))
+			try
 		{
-        $pro_id = $_GET['pro_id'];
+			$db= new PDO('mysql:host=localhost;dbname=jarditou;charset=utf8', 'root','');
+			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}
-        $requete = 'SELECT * FROM produits WHERE pro_id='.$pro_id;
-        $result = $db->query($requete);
-
+		catch(Exception $e)
+		{
+			echo'Erreur : '.$e->getMessage().'<br>';
+			echo'No : '.$e->getCode().'<br>';
+			die('Connexion au serveur impossible.');
+		} 
+		
+		$pro_id = $_GET['pro_id'];
+		
+        $result = $db->query('SELECT * FROM produits join categories on pro_cat_id= cat_id && pro_id='.$pro_id);
         $produit = $result->fetch(PDO::FETCH_OBJ);
+		
        ?>
+	    <div class= 'd-flex justify-content-center'><!-- on centre l'image -->
+		
+			<?php echo "<img src='public/img/".$pro_id."' class= 'img-fluid float-center'>";?>
+	   
+	    </div>
+		
+	<div class="container">
 	   
 		Référence :
 		<br>
-		<input type="text" name="reference" readonly<?php echo $produit->pro_ref; ?>>
+		<input type ="text" name="reference" class ="form-control" value= '<?= $produit->pro_ref;?>' readonly>
 		<br>
-		Catéforie : 
+		Catégorie : 
 		<br>
-		<input type="text" name="categorie" readonly <?php echo $produit->pro_cat_id;?>>
+		<input type ="text" name="categorie" class ="form-control" value= '<?= $produit->cat_nom;?>' readonly>
         <br>
 		Libellé :
 		<br>
-		<input type="text" name="libelle" readonly<?php echo $produit->pro_libelle; ?>>
+		<input type ="text" name="libelle" class ="form-control" value= '<?= $produit->pro_libelle; ?>' readonly>
         <br>
         Description :
 		<br>
-		<input type="text" name="description" readonly<?php echo $produit->pro_description; ?>>
+		<textarea name="description" class ="form-control"  readonly><?= $produit->pro_description; ?></textarea>
         <br>
         Prix : 
 		<br>
-		<input type="text" name="prix" readonly<?php echo $produit->pro_prix;?>>
+		<input type ="text" name="prix" class ="form-control" value= '<?= $produit->pro_prix;?>' readonly>
 		<br>
 		Stock :
 		<br>
-		<input type="text" name="stock" readonly<?php echo $produit->pro_stock;?>>
+		<input type ="text" name="stock" class ="form-control" value= '<?= $produit->pro_stock;?>' readonly>
 		<br>
 		Couleur :
 		<br>
-		<input type="text" name="couleur" readonly<?php echo $produit->pro_couleur;?>>
+		<input type ="text" name="couleur" class ="form-control" value= '<?= $produit->pro_couleur;?>' readonly>
 		<br>
 		Produit bloqué ? :
 		<br>
-		<?php echo $produit->pro_bloque;?>
-		<br>
-		<input type ="radio" name ="bloque" value="oui">Oui
-		<input type="radio" name = "bloque" value ="non">Non
-		<?php if($produit->pro_bloque=1){$_GET['bloque']='oui';}else{$_GET['bloque']='non';}?>
+		
+		
+		<!-- Si le produit est bloqué, "oui" ou "non" -->
+		<?php
+		
+		if($produit->pro_bloque == '1')
+		{
+			echo'Oui';
+		}else{ 
+			echo'Non';
+		}
+		
+		?>
+		<!--										 -->
+		
+		
+		</div>
 		<br>
 		Date d'ajout :
 		<br>
-		<input type="text" name="date_ajout" readonly<?php echo $produit->pro_d_ajout;?>>
+		<input type ="text" name="date_ajout" class ="form-control" value= '<?= $produit->pro_d_ajout;?>' readonly>
 		<br>
 		Date de modification :
-		<input type="text" name="date_modif" readonly<?php echo $produit->pro_d_modif;?>>
 		<br>
-		<a href = "liste.php"><button> Retour</button></a>
-
-	 <?php require"footer.php";?>
+		<input type ="text" name="date_modif" class ="form-control" value= '<?= $produit->pro_d_modif;?>' readonly>
+		<br>
+		
+										<!-- Requêtes Modifier / Supprimer / Retour -->
+		
+		<a href = "liste.php"><button class='btn btn-dark mb-3'>Retour</button></a>
+		<?php echo'<a href = "produits_modif.php?pro_id='.$pro_id.'"><button class ="btn btn-warning mb-3">Modifier</button></a>';?>
+		<?php echo'<a href = "produits_script_delete.php?pro_id='.$pro_id.'"onclick="supprimer();"><button class = "btn btn-danger mb-3">Supprimer</button></a>';?>
+		
+	</div>
+		
+	<?php $result->closeCursor();?>
+	
+	<!-- Fonction qui se déclenche quand on appuie sur "supprimer" -->
+	<script>
+	function supprimer()
+	{
+	let resultat = confirm("voulez-vous vraimment supprimer ce produit ?");
+	if (resultat == false)
+	{
+		event.preventDefault();
+	}
+	}
+	</script>
+	
+	 <?php include"footer.php";?>
 

@@ -10,9 +10,9 @@ $pro_id = $_GET['pro_id'];
 				
 				<!-- 								Image					-->
 				
-		<div class= 'd-flex justify-content-center mt-3 mb-3'><!-- on centre l'image -->
+		<div class= 'd-flex justify-content-center mt-3 mb-3'>	<!-- on centre l'image -->
 		
-			<?php echo "<img src='public/img/".$pro_id."' class= 'img-fluid float-center'>";?>
+			<?php echo "<img src='public/img/".$pro_id."' class= 'img-fluid float-center' height='300' width='300'>";?>
 	   
 	    </div>
 		
@@ -101,7 +101,7 @@ $pro_id = $_GET['pro_id'];
 		<input class="form-check-input" type ="radio" name ="bloque" value="1"<?php if($produit->pro_bloque=='1'){echo'checked';}?>>Oui
 		</div>
 		<div class="form-check form-check-inline">
-		<input class="form-check-input" type="radio" name = "bloque" value ="0"<?php if($produit->pro_bloque=='null'){echo'checked';}?>>Non
+		<input class="form-check-input" type="radio" name = "bloque" value ="0"<?php if($produit->pro_bloque==''||'0'){echo'checked';}?>>Non
 		
 		
 		</div>
@@ -115,7 +115,8 @@ $pro_id = $_GET['pro_id'];
 		<br>
 		
 		Date de modification :
-		<input type ="date" name="date_modif" class= "form-control mb-2" value= '<?php echo $produit->pro_d_modif;?>'>
+		<input type ="text" name="date_modif" class= "form-control mb-2" readonly value= "<?php $date= date("d-m-Y");
+Print(" $date ");?>">
 		
 		<br>
 		

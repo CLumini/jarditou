@@ -72,10 +72,10 @@
 		<label for="bloque">Bloqué ? :</label>
 			<br>
 		<div class="form-check form-check-inline">
-			<input class="form-check-input" type="radio" name="bloque" value ="oui">Oui
+			<input class="form-check-input" type="radio" name="bloque" value ="1">Oui
 		</div>
 		<div class="form-check form-check-inline">
-			<input class="form-check-input" type="radio" name="bloque" value="non">Non
+			<input class="form-check-input" type="radio" name="bloque" value="0">Non
 		</div>
 			<br>
 			

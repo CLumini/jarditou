@@ -20,11 +20,18 @@
         $produit = $result->fetch(PDO::FETCH_OBJ);
 		
        ?>
+	   
+	   
+	   <!-- 								Image					-->
+	   
 	    <div class= 'd-flex justify-content-center'><!-- on centre l'image -->
 		
-			<?php echo "<img src='public/img/".$pro_id."' class= 'img-fluid float-center'>";?>
+			<?php echo "<img src='public/img/".$pro_id."' class= 'img-fluid float-center' height='300' width='300'>";?>
 	   
 	    </div>
+		
+		<!--														-->
+		
 		
 	<div class="container">
 	   

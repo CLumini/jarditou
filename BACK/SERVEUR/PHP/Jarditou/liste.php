@@ -65,7 +65,7 @@
 			echo"<td>".$row->pro_bloque."</td>";
             echo"</tr>";
           }
-
+				
 
         echo "</table>";
 		 $result->closeCursor();

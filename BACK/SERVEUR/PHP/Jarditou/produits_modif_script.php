@@ -1,7 +1,6 @@
 <?php 
-require "connexion_bdd.php";
-$db = connexion_base(); 
-$pro_cat_id = $_POST['categorie'];
+$pro_id =$_POST['id'];
+$pro_cat_id=$_POST['categorie'];
 $pro_ref = $_POST['reference'];
 $pro_libelle = $_POST['libelle'];
 $pro_description = $_POST['description'];
@@ -12,20 +11,47 @@ $pro_d_modif =$_POST['date_modif'];
 $pro_bloque = $_POST['bloque'];
 
 
-$requete = $db->prepare("UPDATE produits SET  pro_ref = :pro_ref, pro_libelle = :pro_libelle, pro_description = :pro_description, pro_prix = :pro_prix, pro_stock = :pro_stock, pro_couleur = :pro_couleur, pro_d_modif = :pro_d_modif, pro_bloque = :pro_bloque WHERE pro_id = : pro_id");
+$host= "localhost";
+$login="root";
+$password="";
+$base="jarditou";
 
-$requete->bindValue(':pro_ref', $pro_ref, PDO::PARAM_STR);
-$requete->bindValue(':pro_libelle', $pro_libelle, PDO::PARAM_STR);
-$requete->bindValue(':pro_description', $pro_description, PDO::PARAM_STR);
-$requete->bindValue(':pro_prix', $pro_prix, PDO::PARAM_INT);
-$requete->bindValue(':pro_stock', $pro_stock, PDO::PARAM_INT);
-$requete->bindValue(':pro_couleur', $pro_couleur, PDO::PARAM_STR);
-$requete->bindValue(':pro_d_modif', $pro_d_modif, PDO::PARAM_STR);
-$requete->bindValue(':pro_bloque', $pro_bloque, PDO::PARAM_INT);
+	try
+		{
+			$db= new PDO('mysql:host=localhost;charset=utf8;dbname=jarditou', 'root', "");
+		
+		}
+		catch(Exception $e)
+		{
+			echo'Erreur : '.$e->getMessage().'<br>';
+			echo'No : '.$e->getCode().'<br>';
+			die('Connexion au serveur impossible.');
+		} 
+		
+  
+try{
+$req_modif="UPDATE produits SET pro_cat_id=:pro_cat_id, pro_ref=:pro_ref, pro_libelle=:pro_libelle, pro_description=:pro_description, pro_prix=:pro_prix, pro_stock=:pro_stock, pro_couleur=:pro_couleur, pro_d_modif=:pro_d_modif, pro_bloque=:pro_bloque WHERE pro_id=:pro_id" ;
+$requete = $db->prepare($req_modif);
 
-$requete->execute();
-
+$requete->execute(array(
+'pro_cat_id'=>$pro_cat_id,
+'pro_ref'=>$pro_ref,
+'pro_libelle'=>$pro_libelle,
+'pro_description'=>$pro_description,
+'pro_prix'=>$pro_prix,
+'pro_stock'=>$pro_stock,
+'pro_couleur'=>$pro_couleur,
+'pro_d_modif'=>$pro_d_modif,
+'pro_bloque'=>$pro_bloque,
+'pro_id'=>$pro_id));
 $requete->closeCursor();
+}
 
-header ("location :liste.php");
+catch(Exception $e){
+	echo "la connexion à la base de données a échoué <br>";
+	echo"Erreur : ".$e->getmessage()."br>";
+	echo"N° : ".$e->getCode();
+	die("Fin du script");
+}
+header("location: liste.php");
 ?>

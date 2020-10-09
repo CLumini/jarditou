@@ -6,13 +6,23 @@
 		
 <div class= "container">
 		
+		<!--		Création d'un nouvel id 				-->
+		
+<?php $der_id= $db->query('SELECT pro_id FROM produits WHERE pro_id= (select MAX(pro_id) from produits)');
+$donnee= $der_id->fetch(PDO::FETCH_ASSOC);
+$max= $donnee['pro_id'];
+$new_id= $max+1;
+$der_id->closeCursor();?>
+
+		<!-- 												-->
 
 		
 
 
-		<form action ="produits_ajout_script.php" method="POST">
+		<form action ="produits_ajout_script.php" method="POST" enctype="multipart/form-data">
 
 
+				<?= '<input type="hidden" name="max_id" value="'.$new_id.'">'; ?> <!-- nouveau pro_id associé au produit sera envoyé au script sous POST (pour nommer l'image)-->
 
 
 		<label for="categorie">Catégorie : </label>
@@ -79,6 +89,21 @@
 		</div>
 			<br>
 			
+			
+			
+		
+			
+			<!--		Upload du fichier				-->
+			
+			<input type="file" name="fichier">
+			<input type="hidden" name="MAX_FILE_SIZE" value="30000">
+			
+	  
+			<!--										-->
+			
+		
+				
+				<br>
 				<button class='btn btn-success mb-3 mt-3'>Ajouter</button>
 
 		</form>

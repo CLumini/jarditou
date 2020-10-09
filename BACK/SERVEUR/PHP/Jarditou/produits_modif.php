@@ -20,7 +20,7 @@ $pro_id = $_GET['pro_id'];
 				
 <div class ="container">
 
-	   <form action ="produits_modif_script.php" method ="POST">
+	   <form action ="produits_modif_script.php" method ="POST" enctype="multipart/form-data">
 	   
 	   
 	   	<?php echo'<input hidden type ="text" name="id" value ="'.$pro_id.'" readonly>'?>
@@ -115,9 +115,12 @@ $pro_id = $_GET['pro_id'];
 		<br>
 		
 		Date de modification :
-		<input type ="text" name="date_modif" class= "form-control mb-2" readonly value= "<?php $date= date("d-m-Y");
-Print(" $date ");?>">
+		<input type ="datetime-local" name="date_modif" class= "form-control mb-2"  >
 		
+		<br>
+			<input type="file" name="fichier">
+			<input type="hidden" name="MAX_FILE_SIZE" value="30000">
+		<br>
 		<br>
 		
 		<button class="btn btn-success mb-3" onclick = "modif();">Modifier</button>

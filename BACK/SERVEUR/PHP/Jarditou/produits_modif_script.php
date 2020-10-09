@@ -11,26 +11,39 @@ $pro_d_modif =$_POST['date_modif'];
 $pro_bloque = $_POST['bloque'];
 
 
-$host= "localhost";
-$login="root";
-$password="";
-$base="jarditou";
+require "connexion_bdd.php";
+$db = connexion_base();
+		
+									/*						Upload du fichier + Erreurs	et Sécurité		*/
+							
+							
+		$extension = substr(strrchr($_FILES["fichier"]["name"],"."),1);
+							
+							if($_FILES["fichier"]["error"]>0)
+							{
+								echo"Erreur, votre, fichier n'a pas été importé";
+							}
+							
+		$aMimeTypes= array("image/gif", "image/jpg", "image/jpeg", "image/pjpeg", "image/png","image/x-png", "image/tiff");
+		$finfo= finfo_open(FILEINFO_MIME_TYPE);
+		$mimetype= finfo_file($finfo, $_FILES["fichier"]["tmp_name"]);
 
-	try
-		{
-			$db= new PDO('mysql:host=localhost;charset=utf8;dbname=jarditou', 'root', "");
-		
-		}
-		catch(Exception $e)
-		{
-			echo'Erreur : '.$e->getMessage().'<br>';
-			echo'No : '.$e->getCode().'<br>';
-			die('Connexion au serveur impossible.');
-		} 
-		
+						finfo_close($finfo);
+						
+							if(in_array($mimetype, $aMimeTypes))
+							{	
+							move_uploaded_file($_FILES["fichier"]["tmp_name"],"C:/wamp/www/Jarditou/public/img/".$pro_id.".".$extension);
+							}
+							else
+							{
+								echo"type de fichier ,non autorisé";
+							}
+
+
+									/*	 	Upload du fichier + Erreurs	et Sécurité		*/	
   
-try{
-$req_modif="UPDATE produits SET pro_cat_id=:pro_cat_id, pro_ref=:pro_ref, pro_libelle=:pro_libelle, pro_description=:pro_description, pro_prix=:pro_prix, pro_stock=:pro_stock, pro_couleur=:pro_couleur, pro_d_modif=:pro_d_modif, pro_bloque=:pro_bloque WHERE pro_id=:pro_id" ;
+
+$req_modif="UPDATE produits SET pro_cat_id=:pro_cat_id, pro_ref=:pro_ref, pro_libelle=:pro_libelle, pro_description=:pro_description, pro_prix=:pro_prix, pro_stock=:pro_stock, pro_couleur=:pro_couleur, pro_d_modif=:pro_d_modif, pro_bloque=:pro_bloque, pro_photo=:pro_photo WHERE pro_id=:pro_id" ;
 $requete = $db->prepare($req_modif);
 
 $requete->execute(array(
@@ -43,15 +56,12 @@ $requete->execute(array(
 'pro_couleur'=>$pro_couleur,
 'pro_d_modif'=>$pro_d_modif,
 'pro_bloque'=>$pro_bloque,
+'pro_photo'=>$extension,
 'pro_id'=>$pro_id));
-$requete->closeCursor();
-}
 
-catch(Exception $e){
-	echo "la connexion à la base de données a échoué <br>";
-	echo"Erreur : ".$e->getmessage()."br>";
-	echo"N° : ".$e->getCode();
-	die("Fin du script");
-}
+$requete->closeCursor();
+
+
+
 header("location: liste.php");
 ?>

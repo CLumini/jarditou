@@ -1,18 +1,7 @@
    <?php
-   
+   	header("Cache-Control: no-cache, must-revalidate" );
 	include "header.php";
-	
- 	try
-		{
-			$db= new PDO('mysql:host=localhost;dbname=jarditou;charset=utf8', 'root','');
-			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		}
-		catch(Exception $e)
-		{
-			echo'Erreur : '.$e->getMessage().'<br>';
-			echo'No : '.$e->getCode().'<br>';
-			die('Connexion au serveur impossible.');
-		} 
+	require "connexion_bdd.php";
 	
 
     $result = $db->query('SELECT pro_photo, pro_id, pro_ref, pro_libelle, pro_prix, pro_stock, pro_couleur, pro_d_ajout, pro_d_modif, pro_bloque FROM produits ORDER BY pro_id ASC');
@@ -29,17 +18,17 @@
        die("La table est vide");
     }
 	
+	?>
+		<div class= 'table-responsive'>
 	
-	echo"<div class= 'table-responsive'>";
 	
-	
-        echo "<table class='table-bordered table hover'>";
+			<table class='table-bordered table hover'>
 		
-	     echo "<thead>
+				<thead>
                     <tr class='table-active'>
                         <th>Photo</th>
                         <th>ID</th>
-                        <th>Catégorie</th>
+                        <th>Référence</th>
                         <th>Libellé</th>
                         <th>Prix</th>
 						<th>Stock</th>
@@ -48,8 +37,9 @@
 						<th>Modif</th>
 						<th>Bloqué</th>
                     </tr>
-          </thead>";
-
+          </thead>
+		  
+<?php
           while ($row = $result->fetch(PDO::FETCH_OBJ))
           {
             echo"<tr>";
@@ -69,9 +59,9 @@
         echo "</table>";
 		 $result->closeCursor();
 		
+?>
 		
-		
-	echo"</div>";
-	echo"<a href = 'produit_ajout.php'><button class ='btn btn-success mb-3'>Ajouter</button></a>";
+	</div>
+	<a href = 'produit_ajout.php'><button class ='btn btn-success mb-3'>Ajouter</button></a>
    
-  include"footer.php";?>
+  <?php include"footer.php";?>

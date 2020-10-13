@@ -1,60 +1,58 @@
  <?php
 		include "header.php";	 
         require "connexion_bdd.php"; 
-        $db = connexion_base();
+       
 		?>
 		
 <div class= "container">
 		
-		<!--		Création d'un nouvel id 				-->
-		
-<?php $der_id= $db->query('SELECT pro_id FROM produits WHERE pro_id= (select MAX(pro_id) from produits)');
-$donnee= $der_id->fetch(PDO::FETCH_ASSOC);
-$max= $donnee['pro_id'];
-$new_id= $max+1;
-$der_id->closeCursor();?>
 
-		<!-- 												-->
-
-		
 
 
 		<form action ="produits_ajout_script.php" method="POST" enctype="multipart/form-data">
 
-
-				<?= '<input type="hidden" name="max_id" value="'.$new_id.'">'; ?> <!-- nouveau pro_id associé au produit sera envoyé au script sous POST (pour nommer l'image)-->
 
 
 		<label for="categorie">Catégorie : </label>
 
 						<!--  Requête et boucle qui permet de sélectionner la catégorie appropriée et l'ID qui lui est associé dans la Base de Données -->
 
-				<?php   $result = $db->query('SELECT cat_id, cat_nom FROM categories');
-						$categorie = $result->fetch(PDO::FETCH_OBJ);
 
-							if (!$result) 
+<?php   					$categories = $db->query('SELECT cat_id, cat_nom FROM categories WHERE  cat_parent IS NULL');
+
+							if (!$categories) 
 								{
 									$optionErreurs = $db->errorInfo();
 									echo $optionErreur[2]; 
 									die("Erreur dans la requête");
 								}
 
-							if ($result->rowCount() == 0) 
+							if ($categories->rowCount() == 0) 
 								{
 									die("La table option est vide");
 								}
 	
 						echo'<select class="form-control mb-2" name ="categorie" id ="categorie">';
-  
-							while ($row = $result->fetch(PDO::FETCH_OBJ))
-								{
-									echo '<option value="'.$row->cat_id.'">'.$row->cat_nom.'</option>';
-								} 
+						
+							foreach($categories as $catValues)// on parcourt le tableau Catégorie pour en extraire les catégories d'outils (cat_parents Null)
+							{
+							echo'<optgroup label="'.$catValues[1].'">';// catValues[1] renvoie le cat_nom--------- soucis : il me manque les catégories 2 et 3 ?!
+							
+								$sousCategorie= $db->query('SELECT cat_id, cat_nom FROM categories WHERE cat_parent='.$catValues[0].' and cat_parent IS NOT NULL');//catValues[0] renvoie le cat_id					
+								
+								foreach($sousCategorie as $sousCatValues)// on extrait les sous-catégories (cat_parent non Null)
+									{
+									echo'<option value="'.$souCatValues[0].'">'.$sousCatValues[1].'</option>';																			
+									}
+									
+							echo'</optgroup>';
+								
+							}
 						echo'</select>';
   
-						$result->closeCursor();
-		  
-				?>
+						$categories->closeCursor();
+						$sousCategorie->closeCursor();
+?>
 						<!--                                  	Fin de la requête catégorie                                                          -->
 
 
@@ -68,7 +66,7 @@ $der_id->closeCursor();?>
 		<textarea class= "form-control mb-2" name="description"></textarea>
 
 		<label for="prix">Prix : </label>
-		<input class= "form-control mb-2" type="text" name="prix">
+		<input class= "form-control mb-2" type ="number" name="prix" step= "0.01" min="0.00" max="999999.99">
 
 		<label for="stock">Stock : </label>
 		<input class= "form-control mb-2" type="text" name="stock">

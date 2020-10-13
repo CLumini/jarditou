@@ -1,6 +1,6 @@
 <?php include "header.php";
 require "connexion_bdd.php";
-$db = connexion_base();
+
 
 $pro_id = $_GET['pro_id'];
 		
@@ -26,96 +26,85 @@ $pro_id = $_GET['pro_id'];
 	   	<?php echo'<input hidden type ="text" name="id" value ="'.$pro_id.'" readonly>'?>
 	   
 	   
-		Référence :
-		<input type ="text" name="reference" class= "form-control mb-2" value= '<?php echo $produit->pro_ref; ?>'>
 		
-		<br>
+		<label for="reference">Référence : </label>
+		<input class= "form-control mb-2" type="text" name="reference" value= '<?php echo $produit->pro_ref; ?>'>
 		
-		Catégorie : 
+		<label for="categorie">Catégorie : </label>
 		
-		<!--  Requête et boucle qui permet de sélectionner la catégorie appropriée et l'ID qui lui est associé dans la Base de Données -->
+						<!--  Requête et boucle qui permet de sélectionner la catégorie appropriée et l'ID qui lui est associé dans la Base de Données -->
 
-				<?php   $res_categorie = $db->query('SELECT cat_id, cat_nom FROM categories');
-						$categorie = $res_categorie->fetch(PDO::FETCH_OBJ);
 
-							if (!$res_categorie) 
+<?php   					$categories = $db->query('SELECT cat_id, cat_nom FROM categories WHERE  cat_parent IS NULL');
+
+							if (!$categories) 
 								{
 									$optionErreurs = $db->errorInfo();
 									echo $optionErreur[2]; 
 									die("Erreur dans la requête");
 								}
 
-							if ($res_categorie->rowCount() == 0) 
+							if ($categories->rowCount() == 0) 
 								{
 									die("La table option est vide");
 								}
 	
-	
-	
-							// Ouverture de la balise 'select'
-							
 						echo'<select class="form-control mb-2" name ="categorie" id ="categorie">';
-  
-							while ($row = $res_categorie->fetch(PDO::FETCH_OBJ))
-								{
-									echo '<option value="'.$row->cat_id.'">'.$row->cat_nom.'</option>';
-								} 
+						
+							foreach($categories as $catValues)// on parcourt le tableau Catégorie pour en extraire les catégories d'outils (cat_parents Null)
+							{
+							echo'<optgroup label="'.$catValues[1].'">';// catValues[1] renvoie le cat_nom--------- soucis : il me manque les catégories 2 et 3 ?! 
+							
+								$sousCategorie= $db->query('SELECT cat_id, cat_nom FROM categories WHERE cat_parent='.$catValues[0].' and cat_parent IS NOT NULL');//catValues[0] renvoie le cat_id					
+								
+								foreach($sousCategorie as $sousCatValues)// on extrait les sous-catégories (cat_parent non Null)
+									{
+									echo'<option value="'.$souCatValues[0].'">'.$sousCatValues[1].'</option>';																			
+									}
+									
+							echo'</optgroup>';
+								
+							}
 						echo'</select>';
   
-						$res_categorie->closeCursor();
-		  
-				?>
-						<!--                                  	Fin de la requête catégorie     					--> 
-		<br>
-		
-		Libellé :
-		<input type ="text" name="libelle" class= "form-control mb-2" value= '<?php echo $produit->pro_libelle; ?>'>
+						$categories->closeCursor();
+						$sousCategorie->closeCursor();
+?>
+						<!--                                  	Fin de la requête catégorie                                                          -->
+
+		<label for="libelle">Libéllé : </label>
+		<input class= "form-control mb-2" type="text" name="libelle" value= '<?php echo $produit->pro_libelle; ?>'>
         
-		<br>
+		<label for="description">Description : </label>
+		<textarea class= "form-control mb-2" name="description"><?php echo $produit->pro_description; ?></textarea>
         
-		Description :
-		<textarea name="description" class= "form-control mb-2" ><?php echo $produit->pro_description; ?></textarea>
-        
-		<br>
-        
-		Prix :
-		<input type ="text" name="prix" class= "form-control mb-2" value= '<?php echo $produit->pro_prix;?>'>
+		<label for="prix">Prix : </label>
+		<input class= "form-control mb-2" type ="number" name="prix" step= "0.01" min="0.00" max="999999.99" value= '<?php echo $produit->pro_prix;?>'>
 		
-		<br>
+		<label for="stock">Stock : </label>
+		<input class= "form-control mb-2" type="text" name="stock" value= '<?php echo $produit->pro_stock;?>'>
 		
-		Stock :
-		<input type ="text" name="stock" class= "form-control mb-2" value= '<?php echo $produit->pro_stock;?>'>
+		<label for="couleur">Couleur : </label>
+		<input class= "form-control mb-2" type="text" name="couleur" value= '<?php echo $produit->pro_couleur;?>'>
 		
-		<br>
-		
-		Couleur :
-		<input type ="text" name="couleur" class= "form-control mb-2" value= '<?php echo $produit->pro_couleur;?>'>
-		
-		<br>
-		
-		Produit bloqué ? :
-		
-		<br>
+		<label for ="bloque">Produit bloqué ? : </label>
 		
 		<div class="form-check form-check-inline">
-		<input class="form-check-input" type ="radio" name ="bloque" value="1"<?php if($produit->pro_bloque=='1'){echo'checked';}?>>Oui
+		<input class="form-check-input" type ="radio" id ="oui" name ="bloque" value="1"<?php if($produit->pro_bloque=='1'){echo'checked';}?>>Oui
 		</div>
+		
 		<div class="form-check form-check-inline">
-		<input class="form-check-input" type="radio" name = "bloque" value ="0"<?php if($produit->pro_bloque==''||'0'){echo'checked';}?>>Non
-		
-		
+		<input class="form-check-input" type="radio" id= "non" name = "bloque" value ="0"<?php if($produit->pro_bloque==''||'0'){echo'checked';}?>>Non
+		<span id="erreurBloque"></span>
 		</div>
 		
 		<br>
-		<br>
 		
-		Date d'ajout :
-		<input type ="date" name="date_ajout" class= "form-control mb-2" readonly value= '<?php echo $produit->pro_d_ajout;?>'>
+		<label for="date_ajout">Date d'ajout : </label>
+		<input class= "form-control mb-2" type="date" name="date_ajout" value= '<?php echo $produit->pro_d_ajout;?>'>
 		
-		<br>
-		
-		Date de modification :
-		<input type ="datetime-local" name="date_modif" class= "form-control mb-2"  >
+		<label for="date_modif">Date d'ajout : </label>
+		<input  class= "form-control mb-2" type="date" name="date_modif">
 		
 		<br>
 			<input type="file" name="fichier">
@@ -123,8 +112,9 @@ $pro_id = $_GET['pro_id'];
 		<br>
 		<br>
 		
-		<button class="btn btn-success mb-3" onclick = "modif();">Modifier</button>
-		
+		<button class="btn btn-success mb-3" onclick = "modif();" id="bouton_envoi">Modifier</button>
+		<span id="erreur"></span>
+		<script src="/public/js/form_ajout_modif.js"></script>
 		</form>
 		
 		
@@ -147,6 +137,9 @@ $pro_id = $_GET['pro_id'];
 		event.preventDefault();
 	}
 	}
+	
+
 	</script>
 	
 	<?php include "footer.php";?>
+	

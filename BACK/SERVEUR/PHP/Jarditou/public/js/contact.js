@@ -4,7 +4,7 @@ formValid.addEventListener("click", validation);
 var nom = document.getElementById("nom");
 var prenom = document.getElementById("prénom");
 var naissance = document.getElementById("naissance");
-var codePostal = document.getElementById("codePostal");
+var codePostal = document.getElementById("postal");
 var eMail = document.getElementById("eMail");
 var feminin = document.getElementById("Féminin")
 var masculin = document.getElementById("Masculin")
@@ -29,7 +29,7 @@ var erreurCheck = document.getElementById("erreurCheck")
 
 
 
-// J'ai voulu faire une fonction "modèle" histoire de ne pas répéter les conditions....RIEN N'A FONCTIONNÉ
+
 
 function validation(event) {
 

@@ -1,6 +1,5 @@
 <?php
-function connexion_base()
-{
+
 $host= "localhost";
 $login="root";
 $password="";
@@ -17,6 +16,6 @@ $base="jarditou";
 			echo'No : '.$e->getCode().'<br>';
 			die('Connexion au serveur impossible.');
 		} 
-		return $db;
-}
+		
+
 ?>

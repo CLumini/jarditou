@@ -12,7 +12,7 @@ $pro_bloque = $_POST['bloque'];
 
 
 require "connexion_bdd.php";
-$db = connexion_base();
+
 		
 									/*						Upload du fichier + Erreurs	et Sécurité		*/
 							
@@ -63,5 +63,5 @@ $requete->closeCursor();
 
 
 
-header("location: liste.php");
+header("Location: liste.php");
 ?>

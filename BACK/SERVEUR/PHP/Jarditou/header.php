@@ -36,11 +36,11 @@
 
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="index.html" title="Accueil">Accueil</a></li>
+                        <a class="nav-link text-dark" href="index.php" title="Accueil">Accueil</a></li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" href="liste.php" title="Tableau">Tableau</a></li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="contact.html" title="Contact">Contact</a></li>
+                        <a class="nav-link text-dark" href="contact.php" title="Contact">Contact</a></li>
                 </ul>
 
                 <form action="Index.html" method="POST" class="form-inline my-2 my-lg-0">

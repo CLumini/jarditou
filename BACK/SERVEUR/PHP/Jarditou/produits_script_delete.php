@@ -12,3 +12,4 @@ $requete->closeCursor();
 
 header ("Location:liste.php");
 exit;
+?>

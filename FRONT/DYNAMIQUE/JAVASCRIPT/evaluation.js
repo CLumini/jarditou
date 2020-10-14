@@ -1,12 +1,15 @@
 // 1 Calcul du nombre de jeunes, de moyens et de vieux
+var exo1=document.getElementById("exo1");
+exo1.addEventListener("click", clickExo1);
+var ageMin = [];
+var ageMax = [];
+var ageMoy = [];
+var userAge = 0
 
-let ageMin = [];
-let ageMax = [];
-let ageMoy = [];
-let userAge = 0
+function clickExo1(){
 
 while (userAge < 100) {
-    let age = prompt("Veuillez entrer un âge (le compteur s'arrête à 100")
+    var age = prompt("Veuillez entrer un âge (le compteur s'arrête à 100")
     userAge = parseInt(age)
 
     if (userAge < 20) {
@@ -19,48 +22,67 @@ while (userAge < 100) {
         ageMoy.push(userAge)
     }
 }
-console.log("Il y a " + ageMin.length + " personnes de moins de 20 ans, " + ageMax.length + " personnes de plus de 40 ans, "+ ageMoy.length + " personnes entre 20 et 40 ans")
+alert("Il y a " + ageMin.length + " personnes de moins de 20 ans, " + ageMax.length + " personnes de plus de 40 ans, "+ ageMoy.length + " personnes entre 20 et 40 ans");
+}
+
 
 // 2 Table de multiplication
 
-let N = 0
-let M = 0
+var exo2=document.getElementById("exo2");
+exo2.addEventListener("click", clickExo2);
 
+function clickExo2(){
+var N = 0;
+var M = prompt("choisissez un multiplicateur");
+var resultTable=[];
 function tableMultiplication(M) {
     for (var i = 0; i < 10; i++) {
         N++
         var result = parseInt(N) * parseInt(M)
-        console.log(N + "x" + M + "=" + result)
+        var afficher = N + " x " + M + " = " + result+" "
+        resultTable.push(afficher)
     }
 }
 
-tableMultiplication(7)
+tableMultiplication(M)
+alert(resultTable)
 
-
+}
 // 3 recherche d'un prénom
 
-let tabPrenom = ["Audrey", "Aurélien", "Flavien", "Jérémy", "Laurent", "Melik", "Nouara", "Salem", "Samuel"]
+var exo3=document.getElementById("exo3");
+exo3.addEventListener("click", clickExo3);
 
+function clickExo3(){
+
+let tabPrenom = ["Audrey", "Aurélien", "Flavien", "Jérémy", "Laurent", "Melik", "Nouara", "Salem", "Samuel"]
+alert("Voici un tableau: "+tabPrenom)
 function recherche() {
-    var prenom = prompt("Veuillez entrer un prénom")
+    var prenom = prompt("Veuillez entrer un prénom à supprimer")
     let index = tabPrenom.indexOf(prenom)
     if (index == -1) {
         alert("le Prénom : '" + prenom + "' ne se trouve pas dans le tableau")
-        console.log(tabPrenom)
+        alert("Le tableau n'a pas changé: "+tabPrenom)
     } else {
         tabPrenom.splice(parseInt(index), 1);
         tabPrenom.push("")
-        console.log(tabPrenom)
+        alert(" Suppression accomplie ! Voici le nouveau tableau: "+tabPrenom)
 
     }
 }
 
 recherche()
+}
 
 //4 total d'une commande
 
-let pUnitaire = prompt("saisissez le prix")
-let quantité = prompt("saisissez la quantité")
+var exo4=document.getElementById("exo4");
+exo4.addEventListener("click", clickExo4);
+
+function clickExo4(){
+
+let pUnitaire = prompt("Saisissez le prix")
+let quantité = prompt("Saisissez la quantité")
 var pAPayer // Prix à payer
 var remise
 var fPort // frais de port non arrondis
@@ -93,7 +115,5 @@ if (tRemise > 500) {
 
 pAPayer = tRemise + fPortA
 
-console.log("le total non remisé est de : " + total + "€ ");
-console.log("la remise est de " + remise + " €");
-console.log("les frais de port sont de " + fPortA + " €");
-console.log("le prix total à payer est de: " + Math.round(pAPayer * 100) / 100 + " €");
+alert("Le total non remisé est de : " + total + "€, la remise est de " + remise + " €, les frais de port sont de " + fPortA + " € et le prix total à payer est de: " + Math.round(pAPayer * 100) / 100 + " €");
+}

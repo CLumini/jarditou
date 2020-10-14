@@ -2,6 +2,7 @@
    	header("Cache-Control: no-cache, must-revalidate" );
 	include "header.php";
 	require "connexion_bdd.php";
+	$db=connexionBase();
 	
 
     $result = $db->query('SELECT pro_photo, pro_id, pro_ref, pro_libelle, pro_prix, pro_stock, pro_couleur, pro_d_ajout, pro_d_modif, pro_bloque FROM produits ORDER BY pro_id ASC');

@@ -1,5 +1,6 @@
 <?php include "header.php";
 require "connexion_bdd.php";
+$db=connexionBase();
 
 
 $pro_id = $_GET['pro_id'];
@@ -35,31 +36,37 @@ $pro_id = $_GET['pro_id'];
 						<!--  Requête et boucle qui permet de sélectionner la catégorie appropriée et l'ID qui lui est associé dans la Base de Données -->
 
 
-<?php   					$categories = $db->query('SELECT cat_id, cat_nom FROM categories WHERE  cat_parent IS NULL');
-
-							if (!$categories) 
+<?php   			
+$requeteCat = $db->prepare('SELECT cat_id, cat_nom FROM categories WHERE  cat_parent IS NULL');
+$requeteCat->execute();
+							if (!$requeteCat) 
 								{
 									$optionErreurs = $db->errorInfo();
 									echo $optionErreur[2]; 
 									die("Erreur dans la requête");
 								}
 
-							if ($categories->rowCount() == 0) 
+							if ($requeteCat->rowCount() == 0) 
 								{
 									die("La table option est vide");
 								}
 	
 						echo'<select class="form-control mb-2" name ="categorie" id ="categorie">';
 						
-							foreach($categories as $catValues)// on parcourt le tableau Catégorie pour en extraire les catégories d'outils (cat_parents Null)
+							while($categories = $requeteCat->fetch())// on parcourt le tableau Catégorie pour en extraire les catégories d'outils (cat_parents Null)
 							{
-							echo'<optgroup label="'.$catValues[1].'">';// catValues[1] renvoie le cat_nom--------- soucis : il me manque les catégories 2 et 3 ?! 
+							echo'<optgroup label="'.$categories->cat_nom.'">';// soucis : il me manque les catégories 2 et 3 ?!
 							
-								$sousCategorie= $db->query('SELECT cat_id, cat_nom FROM categories WHERE cat_parent='.$catValues[0].' and cat_parent IS NOT NULL');//catValues[0] renvoie le cat_id					
+								$requetSousCat= $db->prepare('SELECT cat_id, cat_nom FROM categories WHERE cat_parent= :categorie and cat_parent IS NOT NULL');
+								$requetSousCat->bindValue(":categorie",$categories->cat_id);
+								$requetSousCat->execute();
 								
-								foreach($sousCategorie as $sousCatValues)// on extrait les sous-catégories (cat_parent non Null)
+								while($sousCategories = $requetSousCat->fetch())// on extrait les sous-catégories (cat_parent non Null)
 									{
-									echo'<option value="'.$souCatValues[0].'">'.$sousCatValues[1].'</option>';																			
+									echo'<option value="'.$sousCategories->cat_id.'"';
+									if(($produit->pro_cat_id)&&(($produit->pro_cat_id)==($sousCategories->cat_id))){echo'selected';}//préselection de la catégorie du produit. Peut être modifié.>'.$sousCategories->cat_nom.'</option>';																			
+									
+									echo'>'.$sousCategories->cat_nom.'</option>';
 									}
 									
 							echo'</optgroup>';
@@ -67,8 +74,8 @@ $pro_id = $_GET['pro_id'];
 							}
 						echo'</select>';
   
-						$categories->closeCursor();
-						$sousCategorie->closeCursor();
+						$requeteCat->closeCursor();
+						$requetSousCat->closeCursor();
 ?>
 						<!--                                  	Fin de la requête catégorie                                                          -->
 

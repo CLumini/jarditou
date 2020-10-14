@@ -105,5 +105,5 @@
             </fieldset>
 
         </form>
-
+<script src="/public/js/contact.js"></script>
 <?php include 'footer.php';?>

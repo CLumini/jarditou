@@ -1,6 +1,6 @@
 <?php require "connexion_bdd.php";
 $pro_id=$_GET['pro_id'];
-$db = connexion_base();
+$db=connexionBase();
 
 $requete =$db->prepare("DELETE from produits WHERE pro_id= :pro_id");
 

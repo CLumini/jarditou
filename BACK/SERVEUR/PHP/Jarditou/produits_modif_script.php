@@ -12,6 +12,7 @@ $pro_bloque = $_POST['bloque'];
 
 
 require "connexion_bdd.php";
+$db=connexionBase();
 
 		
 									/*						Upload du fichier + Erreurs	et Sécurité		*/

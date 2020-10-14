@@ -2,6 +2,7 @@
 	 
 		include "header.php";	        
 		require "connexion_bdd.php";
+		$db=connexionBase();
 		
 		$pro_id = $_GET['pro_id'];
 		

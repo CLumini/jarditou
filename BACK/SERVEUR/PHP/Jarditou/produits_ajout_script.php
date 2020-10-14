@@ -1,6 +1,7 @@
 <?php
 
 $pro_cat_id=$_POST['categorie'];
+$pro_ref=$_POST['reference'];
 $pro_libelle= $_POST['libelle'];
 $pro_description= $_POST['description'];
 $pro_prix= $_POST['prix'];
@@ -10,6 +11,7 @@ $pro_d_ajout= $_POST['date_ajout'];
 $pro_bloque= $_POST['bloque'];
 
 require "connexion_bdd.php";
+$db=connexionBase();
 
 
 /*											extraction de l'extension du fichier																				*/
@@ -24,9 +26,11 @@ require "connexion_bdd.php";
 /*											extraction de l'extension du fichier																				*/
 
 
-$requete = $db->prepare("INSERT INTO produits (pro_cat_id, pro_libelle, pro_description, pro_prix, pro_stock, pro_couleur, pro_d_ajout, pro_bloque, pro_photo) VALUES (:pro_cat_id, :pro_libelle, :pro_description, :pro_prix, :pro_stock, :pro_couleur, :pro_d_ajout, :pro_bloque, :pro_photo)");
+$requete = $db->prepare("INSERT INTO produits (pro_cat_id, pro_ref, pro_libelle, pro_description, pro_prix, pro_stock, pro_couleur, pro_d_ajout, pro_bloque, pro_photo)
+VALUES (:pro_cat_id, :pro_ref, :pro_libelle, :pro_description, :pro_prix, :pro_stock, :pro_couleur, :pro_d_ajout, :pro_bloque, :pro_photo)");
 
 $requete->bindValue(':pro_cat_id', $pro_cat_id, PDO::PARAM_INT);
+$requete->bindValue(':pro_ref',$pro_ref, PDO::PARAM_STR);
 $requete->bindValue(':pro_libelle', $pro_libelle, PDO::PARAM_STR);
 $requete->bindValue(':pro_description', $pro_description, PDO::PARAM_STR);
 $requete->bindValue(':pro_prix', $pro_prix, PDO::PARAM_INT);
@@ -39,17 +43,20 @@ $requete->bindValue(':pro_photo', $extension, PDO::PARAM_STR);
 $requete->execute();
 $requete->closeCursor();
 
+
+
+
+
 /*                                      			upload de l'image                                                                 */
 													
 	$requeteID = $db->prepare("SELECT pro_id FROM produits WHERE pro_ref=:pro_ref"); // on récupère le pro_id grâce à la référence (pro_ref) afin de nommer le fichier.
     $requeteID->bindValue(':pro_ref',$pro_ref, PDO::PARAM_STR);
     $requeteID->execute();
-    $produit=$requeteID->fetch(PDO::FETCH_OBJ);
-    $requeteID->closeCursor();
+    $produit= $requeteID->fetch(); 
+
+    
 
     $target_file = "C:/wamp/www/Jarditou/public/img/".$produit->pro_id.".".$extension;
-	
-
 							
 		$aMimeTypes= array("image/gif", "image/jpg", "image/jpeg", "image/pjpeg", "image/png","image/x-png", "image/tiff");
 		$finfo= finfo_open(FILEINFO_MIME_TYPE);
@@ -69,8 +76,8 @@ $requete->closeCursor();
 						
 
 
-header("Location: liste.php");
-exit;
+$requeteID->closeCursor();
 
+header("Location: liste.php");
 
 ?>

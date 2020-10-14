@@ -70,7 +70,7 @@
 	<script>
 	function supprimer()
 	{
-	let resultat = confirm("voulez-vous vraimment supprimer ce produit ?");
+	let resultat = confirm("Voulez-vous vraiment supprimer ce produit ?");
 	if (resultat == false)
 	{
 		event.preventDefault();

@@ -79,7 +79,7 @@ $requeteCat->execute();
 		<input class= "form-control mb-2" type="text" name="couleur">
 
 		<label for="date_ajout">Date d'ajout : </label>
-		<input class= "form-control mb-2" type="date" name="date_ajout">
+		<input class= "form-control mb-2" type="text" name="date_ajout" value="<?php echo date("Y-m-d")?>" readonly>
 
 		<label for="bloque">Bloqué ? :</label>
 			<br>

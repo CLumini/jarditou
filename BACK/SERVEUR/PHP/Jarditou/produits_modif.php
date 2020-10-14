@@ -6,7 +6,7 @@ $db=connexionBase();
 $pro_id = $_GET['pro_id'];
 		
         $result = $db->query('SELECT * FROM produits WHERE pro_id='.$pro_id);
-        $produit = $result->fetch(PDO::FETCH_OBJ);
+        $produit = $result->fetch();
 ?>
 				
 				<!-- 								Image					-->
@@ -108,10 +108,10 @@ $requeteCat->execute();
 		<br>
 		
 		<label for="date_ajout">Date d'ajout : </label>
-		<input class= "form-control mb-2" type="date" name="date_ajout" value= '<?php echo $produit->pro_d_ajout;?>'>
+		<input class= "form-control mb-2" type="date" name="date_ajout" value= "<?php echo $produit->pro_d_ajout;?>">
 		
-		<label for="date_modif">Date d'ajout : </label>
-		<input  class= "form-control mb-2" type="date" name="date_modif">
+		<label for="date_modif">Date de modification : </label>
+		<input  class= "form-control mb-2" type="text" name="date_modif" value="<?php echo date("Y-m-d H:i:s")?>" readonly>
 		
 		<br>
 			<input type="file" name="fichier">

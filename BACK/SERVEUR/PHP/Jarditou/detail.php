@@ -7,7 +7,7 @@
 		$pro_id = $_GET['pro_id'];
 		
         $result = $db->query('SELECT * FROM produits join categories on pro_cat_id= cat_id && pro_id='.$pro_id);
-        $produit = $result->fetch(PDO::FETCH_OBJ);
+        $produit = $result->fetch();
 		
        ?>
 	   
@@ -52,7 +52,7 @@
 		<label for="date_ajout">Date d'ajout : </label>
 		<input class= "form-control mb-2" type="date" name="date_ajout" value= "<?= $produit->pro_d_ajout;?>" readonly>
 		
-		<label for="date_modif">Date d'ajout : </label>
+		<label for="date_modif">Date de modification : </label>
 		<input  class= "form-control mb-2" type="date" name="date_modif" value= "<?= $produit->pro_d_modif;?>" readonly>
 		<br>
 		

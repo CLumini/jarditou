@@ -41,7 +41,7 @@
           </thead>
 		  
 <?php
-          while ($row = $result->fetch(PDO::FETCH_OBJ))
+          while ($row = $result->fetch())
           {
             echo"<tr>";
 			echo"<td> <img src='public/img/".$row->pro_id.".".$row->pro_photo."' class='img-fluid' height='150' width='150'></td>";

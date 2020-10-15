@@ -1,28 +1,44 @@
 <?php include'header.php';?>
 
-        <form action="bienvenue.php" method="POST">
+        <form action="formValid.php" method="POST">
 
             <fieldset>
 
                 <legend>Vos coordonnées</legend>
-
+				
+				<?php
+				
+				// 			verification du formulaire et messages d'erreur			//
+				
+				if(isset($_GET['form'])){
+					
+				if($_GET['form']=='formErreurEmpty'){ echo"<p style= 'color: red'>Veuillez renseigner les champs obligatoires</p>";}
+				
+				elseif($_GET['form']=='formErreurRegExp'){ echo"<p style= 'color: red'>Veuillez respecter le format des champs correspondants: lettres pour les noms et prénoms, @ pour les mails'</p>";}
+				
+				if($_GET['form']=='formOk'){echo'Formulaire envoyé avec succès !';} 
+				}
+				// 			verification du formulaire et messages d'erreur			//			
+				?>
+				
+				
                 <div class="form-group row">
 
                     <label for="nom">Votre nom* : </label>
                     <input class="form-control" type="text" name="nom" id="nom" title="nom">			
-					<span id="erreurNom"></span><!--span utilisé pour les messages d'erreurs en javascript-->
+					<span id="erreurNom" name="erreurNom"></span><!--span utilisé pour les messages d'erreurs en javascript-->
 					
                 </div>
 
                 <div class="form-group row">
                     <label for="prenom">Votre prénom* : </label>
-                    <input class="form-control" type="text" name="prenom" id="prénom" required title="prenom">
+                    <input class="form-control" type="text" name="prenom" id="prénom"  title="prenom">
                     <span id="erreurPrenom"></span>
                 </div>
 
                 <div class="form-group">
 
-                    <p>Sexe* : <p>
+                    <label for="sexe">Sexe* : <p>
 
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="sexe" id="Féminin" value="Féminin">
@@ -38,14 +54,14 @@
 
                 <div class="form-group row">
                     <label for="date_naissance">Date de naissance* : </label>
-                    <input class="form-control" type="date" name="date_naissance" id="naissance" required
+                    <input class="form-control" type="date" name="date_naissance" id="naissance" 
                         title="Date de naissance">
                     <span id="var erreurNaissance"></span>
                 </div>
 
                 <div class="form-group row">
                     <label for="code_postal">Code postal* : </label>
-                    <input class="form-control" type="text" name="code_postal" id="codePostal" required
+                    <input class="form-control" type="text" name="code_postal" id="codePostal" 
                         title="code postal" max="5">
                     <span id="erreurCP"></span>
                 </div>
@@ -62,7 +78,7 @@
 
                 <div class="form-group row">
                     <label for="eMail">Email* : </label>
-                    <input class="form-control" type="text" name="eMail" id="eMail" required title="Email">
+                    <input class="form-control" type="text" name="eMail" id="eMail"  title="Email">
                     <span id="erreurEMail"></span>
                 </div>
 
@@ -82,17 +98,18 @@
                         <option value="Autres">Autres</option>
                     </select>
                     <span id="erreurSujet"></span>
+
                 </div>
 
                 <div class="form group row">
                     <label for="question">Votre question* : </label>
-                    <textarea class="form-control" name="question" id="question" required></textarea>
+                    <textarea class="form-control" name="question" id="question" ></textarea>
                     <span id="erreurQuestion"></span>
                 </div>
 
                 <div class="form-group">
                     <input class="form-check-input" type="checkbox" name="formulaire" value="consent_OK"
-                        id="check_box" required>*J'accepte le
+                        id="check_box" >*J'accepte le
                     traitement informatique de ce formulaire
                     <span id="erreurCheck"></span>
                 </div>
